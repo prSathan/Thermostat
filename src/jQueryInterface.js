@@ -11,7 +11,24 @@ var energyColorDisplay = function() {
   };
 };
 
+function displayWeather(city) {
+ var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
+ var token = '&appid=50bff27e33c589739e74f1d6baa9a1e4';
+ var units = '&units=metric';
+ $.get(url + token + units, function(data) {
+   $('#current-temperature').text(data.main.temp);
+ })
+ }
+
 $( document ).ready(function() {
+
+displayWeather('London');
+
+$('#select-city').submit(function(event) {
+  event.preventDefault();
+  var city = $('#current-city').val();
+  displayWeather(city);
+})
 
   $( "#tempDisplay" ).text(thermostat.temperature);
   $( "#powerSaving" ).text("Power Saving: " + thermostat.powerSavingModeString());
@@ -54,7 +71,6 @@ $( document ).ready(function() {
     $( "#tempDisplay" ).text(thermostat.temperature)
     energyColorDisplay();
   });
-
 
 
 });
